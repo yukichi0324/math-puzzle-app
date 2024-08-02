@@ -40,6 +40,9 @@ export default {
                 zIndex: 1
             };
         },
+        updateScore(numberOfCellsRemoved) {
+            this.score += numberOfCellsRemoved; // 削除したセルの数だけスコアを増加
+        },
         //隣接チェック
         checkAdjacent(cells) {
             console.log('*********', cells)
@@ -114,6 +117,9 @@ export default {
             if (cellsToRemove.size > 0) {
                 console.log('*************', cellsToRemove);
                 this.staticCells = this.staticCells.filter(cell => !cellsToRemove.has(cell));
+
+                // スコアを更新
+                this.updateScore(cellsToRemove.size);
 
                 // セルを削除した後、列内のセルを下に移動
                 const columnsToUpdate = [...new Set(Array.from(cellsToRemove).map(cell => cell.x))];
