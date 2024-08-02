@@ -139,13 +139,58 @@ export default {
                 this.nextCell = { value: Math.floor(Math.random() * 10), x: Math.floor(Math.random() * 6), y: 0 };
                 console.log('this.nextCell-2', this.nextCell);
             }
+        },
+        moveLeft() {
+            if (this.fallingCell) {
+                const newCell = { ...this.fallingCell, x: this.fallingCell.x - 1 };
+                if (!this.isCollision(newCell)) {
+                    this.fallingCell.x -= 1;
+                }
+            }
+        },
+        moveRight() {
+            if (this.fallingCell) {
+                const newCell = { ...this.fallingCell, x: this.fallingCell.x + 1 };
+                if (!this.isCollision(newCell)) {
+                    this.fallingCell.x += 1;
+                }
+            }
+        },
+        moveDown() {
+            if (this.fallingCell) {
+                const newCell = { ...this.fallingCell, y: this.fallingCell.y + 1 };
+                if (this.isCollision(newCell)) {
+                    this.staticCells.push(this.fallingCell);
+                    this.checkForCompleteLines();
+                    this.fallingCell = null;
+                } else {
+                    this.fallingCell.y += 1;
+                }
+            }
+        },
+        handleKeyDown(event) {
+            switch (event.key) {
+                case 'ArrowLeft':
+                    this.moveLeft();
+                    break;
+                case 'ArrowRight':
+                    this.moveRight();
+                    break;
+                case 'ArrowDown':
+                    this.moveDown();
+                    break;
+                default:
+                    break;
+            }
         }
     },
     created() {
         this.intervalId = setInterval(this.moveCellsDown, 1000);
+        window.addEventListener('keydown', this.handleKeyDown);
     },
     beforeUnmount() {
         clearInterval(this.intervalId);
+        window.removeEventListener('keydown', this.handleKeyDown);
     }
 }
 </script>
