@@ -37,7 +37,12 @@ export default {
                 height: '50px',
                 backgroundColor: 'rgb(196, 200, 243)',
                 border: '1px solid lightgray',
-                zIndex: 1
+                zIndex: 1,
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                fontSize: '16px', // 必要に応じてフォントサイズを調整
+                color: 'black' // 必要に応じて文字の色を調整
             };
         },
         updateScore(numberOfCellsRemoved) {
