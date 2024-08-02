@@ -1,7 +1,7 @@
 <!-- src/App.vue -->
 <template>
   <div id="app" :style="appStyle">
-    <PuzzleGrid @update-score="handleScoreUpdate"/>
+    <PuzzleGrid @update-score="handleScoreUpdate" />
   </div>
 </template>
 
@@ -38,11 +38,15 @@ export default {
       console.log('***************************');
 
       this.appScore = newScore;
-      
-      if (newScore >= 2) {
+
+      if (newScore >= 6) {
+        this.backgroundImage = require('@/assets/utyuu.png');
+      } else if (newScore >= 4) {
+        this.backgroundImage = require('@/assets/kumo.png');
+      } else if (newScore >= 2) {
         this.backgroundImage = require('@/assets/yama-no-ue.png');
       } else {
-        this.backgroundImage = require('@/assets/nohara.png'); // スコアが条件を満たさない場合、元の画像に戻す
+        this.backgroundImage = require('@/assets/nohara.png');
       }
     }
   }
@@ -50,7 +54,8 @@ export default {
 </script>
 
 <style>
-html, body {
+html,
+body {
   margin: 0;
   padding: 0;
   height: 100%;
