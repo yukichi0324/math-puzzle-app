@@ -9,6 +9,9 @@
                 {{ fallingCell.value }}
             </div>
         </div>
+        <div class="score-board">
+            <h2>Score: {{ score }}</h2>
+        </div>
     </div>
 </template>
 
@@ -17,10 +20,11 @@ export default {
     name: 'PuzzleGrid',
     data() {
         return {
-            staticCells: [{ value: 1, x: 3, y: 7 },{ value: 5, x: 3, y: 6 }],
+            staticCells: [{ value: 1, x: 3, y: 7 }, { value: 5, x: 3, y: 6 }],
             fallingCell: null,
             nextCell: { value: 9, x: 3, y: 0 }, // 初期の落ちるセルの設定
-            intervalId: null
+            intervalId: null,
+            score: 0
         }
     },
     methods: {
@@ -38,9 +42,9 @@ export default {
         },
         //隣接チェック
         checkAdjacent(cells) {
-            console.log('*********',cells)
+            console.log('*********', cells)
             const adjacent = (cell1, cell2) => {
-                console.log(cell1,cell2);
+                console.log(cell1, cell2);
                 return (
                     (Math.abs(cell1.x - cell2.x) === 1 && cell1.y === cell2.y) || // 横の隣接
                     (Math.abs(cell1.y - cell2.y) === 1 && cell1.x === cell2.x)    // 縦の隣接
@@ -68,7 +72,7 @@ export default {
                 let sum = 0;
                 for (let j = 0; j < rowCells.length; j++) {
                     if (i & (1 << j)) {
-                        console.log('@@@@@@@@@@@',subset)
+                        console.log('@@@@@@@@@@@', subset)
                         subset.push(rowCells[j]);
                         sum += rowCells[j].value;
                     }
@@ -108,7 +112,7 @@ export default {
 
             // 完了したセルを削除
             if (cellsToRemove.size > 0) {
-                console.log('*************',cellsToRemove);
+                console.log('*************', cellsToRemove);
                 this.staticCells = this.staticCells.filter(cell => !cellsToRemove.has(cell));
 
                 // セルを削除した後、列内のセルを下に移動
@@ -228,5 +232,11 @@ export default {
     height: 50px;
     background-color: lightgray;
     border: 1px solid lightgray;
+}
+
+.score-board h2 {
+    font-size: 24px;
+    color: #333;
+    margin-left: 100px;
 }
 </style>
