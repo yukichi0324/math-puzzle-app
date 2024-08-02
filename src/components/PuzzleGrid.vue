@@ -17,7 +17,7 @@ export default {
     name: 'PuzzleGrid',
     data() {
         return {
-            staticCells: [{ value: 1, x: 3, y: 7 }],
+            staticCells: [{ value: 1, x: 3, y: 7 },{ value: 5, x: 3, y: 6 }],
             fallingCell: null,
             nextCell: { value: 9, x: 3, y: 0 }, // 初期の落ちるセルの設定
             intervalId: null
@@ -31,7 +31,7 @@ export default {
                 left: `${cell.x * 55}px`, // セルのサイズ（50px）と間隔（5px）を考慮
                 width: '50px',
                 height: '50px',
-                backgroundColor: 'aquamarine',
+                backgroundColor: 'rgb(196, 200, 243)',
                 border: '1px solid lightgray',
                 zIndex: 1
             };
@@ -79,6 +79,14 @@ export default {
             }
             return result;
         },
+        moveCellsDownInColumn(x, minY) {
+            // 指定された列のセルを移動させる
+            this.staticCells.forEach(cell => {
+                if (cell.x === x && cell.y < minY) {
+                    cell.y += 1;
+                }
+            });
+        },
 
         // 行や列内で合計が10になるセルを見つけて削除
         checkForCompleteLines() {
@@ -100,7 +108,12 @@ export default {
 
             // 完了したセルを削除
             if (cellsToRemove.size > 0) {
+                console.log('*************',cellsToRemove);
                 this.staticCells = this.staticCells.filter(cell => !cellsToRemove.has(cell));
+
+                // セルを削除した後、列内のセルを下に移動
+                const columnsToUpdate = [...new Set(Array.from(cellsToRemove).map(cell => cell.x))];
+                columnsToUpdate.forEach(x => this.moveCellsDownInColumn(x, Math.max(...Array.from(cellsToRemove).map(cell => cell.y))));
             }
         },
 
