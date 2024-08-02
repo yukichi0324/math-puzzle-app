@@ -229,8 +229,8 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: rgba(255, 255, 255, 0.373); /* 半透明な白色の背景 */
-    /*padding: 20px; /* グリッドと背景の間にスペースを追加 */
+    /* 半透明な白色の背景 */
+    background-color: rgba(255, 255, 255, 0.373);
 }
 
 .grid {
