@@ -2,11 +2,7 @@
     <div class="grid-container">
         <div class="grid">
             <div v-for="n in 48" :key="n" class="grid-cell"></div>
-            <div 
-                v-for="cell in cells" 
-                :key="cell.x + '-' + cell.y" 
-                :style="cellStyle(cell)"
-            >
+            <div v-for="cell in cells" :key="cell.x + '-' + cell.y" :style="cellStyle(cell)">
                 {{ cell.value }}
             </div>
         </div>
@@ -33,7 +29,24 @@ export default {
                 border: '1px solid lightgray',
                 zIndex: 1
             };
-        }
+        },
+        moveCellsDown() {
+            console.log('call moveCellsDown')
+            //TODO:forEachが嫌だ
+            this.cells.forEach(cell => {
+                if (cell.y < 7) {
+                    cell.y += 1;
+                }
+            });
+        },
+    },
+    created() {
+        console.log('created')
+        this.intervalId = setInterval(this.moveCellsDown, 1000);
+    },
+    beforeUnmount() {
+        console.log('beforeDestroy')
+        clearInterval(this.intervalId);
     }
 }
 </script>
