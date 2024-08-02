@@ -42,6 +42,7 @@ export default {
         },
         updateScore(numberOfCellsRemoved) {
             this.score += numberOfCellsRemoved; // 削除したセルの数だけスコアを増加
+            this.$emit('update-score', this.score); // スコアの変更を親コンポーネントに通知
         },
         //隣接チェック
         checkAdjacent(cells) {
